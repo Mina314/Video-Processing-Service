@@ -1,9 +1,15 @@
 import express from "express";
 // import ffmpeg from "fluent-ffmpeg"; 
-import { convertVideo, deleteProcessedVideo, deleteRawVideo, downloadRawVideo, setupDirectories, uploadProcessedVideo } from "./storage";
-
+import { 
+    uploadProcessedVideo,
+    downloadRawVideo,
+    deleteRawVideo,
+    deleteProcessedVideo,
+    convertVideo,
+    setupDirectories
+  } from './storage';
+  
 setupDirectories();
-
 
 const app = express();
 // Middleware to parse request bodies
@@ -38,8 +44,7 @@ app.post("/process-video", async (req,res) =>{
             deleteRawVideo(inputFileName),
             deleteProcessedVideo(outputFileName)
         ]);
-        
-        console.error(err);
+
         return res.status(500).send('Internal Server Error: video processing failed.');
     }
 
@@ -52,7 +57,6 @@ app.post("/process-video", async (req,res) =>{
     ]);
 
     return res.status(200).send('Processing finished successfully');
-
 });
 
     // *******Storage.ts*******
